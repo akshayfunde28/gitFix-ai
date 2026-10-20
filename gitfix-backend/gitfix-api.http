@@ -1,0 +1,65 @@
+### GitFix AI REST API Collection
+
+@baseUrl = http://localhost:8080
+@connectionId = replace-with-connection-id
+@jobId = replace-with-job-id
+
+### 1. Actuator Health Check
+GET {{baseUrl}}/actuator/health
+Accept: application/json
+
+### 2. Register a New GitHub Connection
+# Encrypts PAT using AES-GCM and generates a per-connection webhook secret
+POST {{baseUrl}}/api/connections
+Content-Type: application/json
+
+{
+  "githubToken": "ghp_yourPersonalAccessTokenHere",
+  "repoFullName": "your-username/your-repo-name"
+}
+
+### 3. List All Active Connections
+GET {{baseUrl}}/api/connections
+Accept: application/json
+
+### 4. Get Connection by ID
+GET {{baseUrl}}/api/connections/{{connectionId}}
+Accept: application/json
+
+### 5. Auto-Register GitHub Webhook on Target Repository
+# Automatically registers http://<public-url>/api/webhook/github/{connectionId} via GitHub API
+POST {{baseUrl}}/api/connections/{{connectionId}}/webhook
+Accept: application/json
+
+### 6. Trigger Job Manually (Handy for testing without webhook)
+POST {{baseUrl}}/api/jobs/manual
+Content-Type: application/json
+
+{
+  "connectionId": "{{connectionId}}",
+  "issueNumber": 1
+}
+
+### 7. List All Jobs
+GET {{baseUrl}}/api/jobs
+Accept: application/json
+
+### 8. Get Job Details by ID
+GET {{baseUrl}}/api/jobs/{{jobId}}
+Accept: application/json
+
+### 9. Get Job Execution Logs (Step-by-step audit)
+GET {{baseUrl}}/api/jobs/{{jobId}}/logs
+Accept: application/json
+
+### 10. Get Job Attempts & Patch Diffs
+GET {{baseUrl}}/api/jobs/{{jobId}}/attempts
+Accept: application/json
+
+### 11. Retry a Failed Job
+POST {{baseUrl}}/api/jobs/{{jobId}}/retry
+Accept: application/json
+
+### 12. Delete a Connection
+DELETE {{baseUrl}}/api/connections/{{connectionId}}
+Accept: application/json

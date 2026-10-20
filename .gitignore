@@ -1,0 +1,29 @@
+# Environment & Secrets
+.env
+*.env
+*.env.local
+
+# Build artifacts
+**/target/
+**/dist/
+**/dist-ssr/
+build/
+*.jar
+*.war
+
+# Dependencies
+**/node_modules/
+
+# Workspaces
+**/workspace/
+
+# Logs
+*.log
+**/logs/
+
+# IDE & OS
+.idea/
+.vscode/
+*.iml
+.DS_Store
+Thumbs.db
